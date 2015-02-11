@@ -5,7 +5,7 @@ This is a repository for plaintext OCR processing results on Internet Archive wo
 
 Processing is being done with:
 
-   TESSERACT_FLAGS="-l lat+eng+grc+deu" ~/source/ocrpdf/ocrpdf.sh "${i}.pdf"
+    TESSERACT_FLAGS="-l lat+eng+grc+deu" ~/source/ocrpdf/ocrpdf.sh "${i}.pdf"
 
 Where ocrpdf.sh is a version of [this script](https://gist.github.com/ryanfb/f792ce839c8f26e972cf) modified to retain plaintext and hocr output.
 
