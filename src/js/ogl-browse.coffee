@@ -30,7 +30,7 @@ add_archive_repo = (repo_li_id, identifier) ->
   loader = ($('<div>').attr('class','ui active mini loader'))
   repo_li.append(loader)
  
-  $.ajax "http://openlibrary.org/ia/#{identifier}.json",
+  $.ajax "https://openlibrary.org/ia/#{identifier}.json",
     type: 'GET'
     dataType: 'json'
     crossDomain: 'true'
