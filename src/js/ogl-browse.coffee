@@ -8,17 +8,30 @@ add_hathitrust_repo = (repo_li_id, identifier) ->
   repo_li = $("##{repo_li_id}")
   loader = ($('<div>').attr('class','ui active mini loader'))
   repo_li.append(loader)
-  $.ajax "http://catalog.hathitrust.org/api/volumes/htid/#{identifier}.json",
+  $.ajax "http://catalog.hathitrust.org/api/volumes/full/htid/#{identifier}.json",
     type: 'GET'
     dataType: 'json'
     crossDomain: 'true'
     error: (jqXHR, textStatus, errorThrown) ->
       console.log('AJAX error')
+      console.log(jqXHR)
+      console.log(textStatus)
+      console.log(errorThrown)
       loader.remove()
     success: (data, textStatus, jqXHR) ->
-      console.log('hathitrust success for ' + identifier)
-      console.log(data)
-      console.log(data.records.length)
+      # console.log('hathitrust success for ' + identifier)
+      # console.log(data)
+      # console.log(data.records)
+      for record_key,record of data.records
+        # console.log(record)
+        repo_li.append($('<p>').append($('<a>').attr('href',record.recordURL).attr('target','_blank').text(identifier + ' on HathiTrust')))
+        xml = $.parseXML(record['marc-xml'])
+        # console.log(xml)
+        for key in ['245','100','243','260'] # 500 504 700
+          record_text = $(xml).find("datafield[tag=#{key}]").children('subfield').text()
+          record_text = record_text.replace(/,([^ ])/g, ', \$1')
+          if record_text
+            repo_li.append($('<p>').text(record_text))
       loader.remove()
 
 add_archive_repo = (repo_li_id, identifier) ->
@@ -60,8 +73,8 @@ build_interface = ->
       repo_li.append(repo_link)
       repo_list.append(repo_li)
       if ocr_identifier.match(/\./) # hathitrust
-        # disable calls to hathitrust until CORS is enabled
-        # add_hathitrust_repo(repo_li_id, ocr_identifier)
+        ocr_identifier = ocr_identifier.replace(/\.ark-/,'.ark:').replace(/-/g,'/')
+        add_hathitrust_repo(repo_li_id, ocr_identifier)
       else # archive.org
         add_archive_repo(repo_li_id, ocr_identifier)
 
