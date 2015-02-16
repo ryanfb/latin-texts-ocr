@@ -60,7 +60,7 @@ add_archive_repo = (repo_li_id, identifier) ->
 build_interface = ->
   repo_list = $('<ul>').attr('id','repo_list').attr('class','list-group')
   $('#content').append(repo_list)
-  ocr_pattern = /.?201\d+-\d\d-\d\d-\d\d-\d\d.?/
+  ocr_pattern = /[._]?201\d+-\d\d-\d\d-\d\d-\d\d[._]?/
   scan_pattern = /_.*$/
   repos = _.sortBy(repos, (repo) -> repo.updated_at).reverse()
   for repo in repos
