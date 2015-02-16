@@ -3,9 +3,9 @@
 
 repos = []
 
-add_hathitrust_repo = (repo_url_fragment, identifier) ->
+add_hathitrust_repo = (repo_li_id, identifier) ->
   console.log('add hathitrust repo: ' + identifier)
-  repo_li = $("##{repo_url_fragment}")
+  repo_li = $("##{repo_li_id}")
   loader = ($('<div>').attr('class','ui active mini loader'))
   repo_li.append(loader)
   $.ajax "http://catalog.hathitrust.org/api/volumes/htid/#{identifier}.json",
@@ -21,11 +21,11 @@ add_hathitrust_repo = (repo_url_fragment, identifier) ->
       console.log(data.records.length)
       loader.remove()
 
-add_archive_repo = (repo_url_fragment, identifier) ->
+add_archive_repo = (repo_li_id, identifier) ->
   console.log('add archive repo: ' + identifier)
   # $.ajax "https://archive.org/details/#{identifier}&output=json",
   archive_link = $('<a>').attr('href',"https://archive.org/details/#{identifier}").attr('target','_blank').text(identifier + ' on archive.org')
-  repo_li = $("##{repo_url_fragment}")
+  repo_li = $("##{repo_li_id}")
   repo_li.append($('<p>').append(archive_link))
   loader = ($('<div>').attr('class','ui active mini loader'))
   repo_li.append(loader)
@@ -55,14 +55,15 @@ build_interface = ->
     if repo_url_fragment.match(ocr_pattern)
       ocr_identifier = repo_url_fragment.replace(ocr_pattern,'').replace(scan_pattern,'')
       repo_link = $('<a>').attr('href',repo.html_url).attr('target','_blank').text(repo_url_fragment)
-      repo_li = $('<li>').attr('id',repo_url_fragment).attr('class','list-group-item')
+      repo_li_id = repo_url_fragment.replace(/\./g,'_')
+      repo_li = $('<li>').attr('id',repo_li_id).attr('class','list-group-item')
       repo_li.append(repo_link)
       repo_list.append(repo_li)
       if ocr_identifier.match(/\./) # hathitrust
         # disable calls to hathitrust until CORS is enabled
-        # add_hathitrust_repo(repo_url_fragment, ocr_identifier)
+        # add_hathitrust_repo(repo_li_id, ocr_identifier)
       else # archive.org
-        add_archive_repo(repo_url_fragment, ocr_identifier)
+        add_archive_repo(repo_li_id, ocr_identifier)
 
 grab_repo_page = (url, callback) ->
   console.log('grab_repo_page: ' + url)
