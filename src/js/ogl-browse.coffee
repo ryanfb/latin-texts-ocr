@@ -42,7 +42,6 @@ add_archive_repo = (repo_li_id, identifier) ->
   repo_li.append($('<p>').append(archive_link))
   loader = ($('<div>').attr('class','ui active mini loader'))
   repo_li.append(loader)
- 
   $.ajax "https://openlibrary.org/ia/#{identifier}.json",
     type: 'GET'
     dataType: 'json'
@@ -87,12 +86,9 @@ grab_repo_page = (url, callback) ->
     error: (jqXHR, textStatus, errorThrown) ->
       console.log('AJAX error')
     success: (data, textStatus, jqXHR) ->
-      console.log('AJAX success')
       console.log(jqXHR.getResponseHeader('Link'))
       links = jqXHR.getResponseHeader('Link').split(',')
       next = (link.split(';')[0] for link in links when link.split(';')[1] is ' rel="next"')
-      console.log(next)
-      console.log(data)
       repos = repos.concat(data)
       if next.length > 0
         grab_repo_page(next[0][1..-2], callback)
