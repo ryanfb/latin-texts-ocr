@@ -29,7 +29,7 @@ add_hathitrust_repo = (repo_li_id, identifier) ->
         # console.log(xml)
         for key in ['245','100','243','260'] # 500 504 700
           record_text = $(xml).find("datafield[tag=#{key}]").children('subfield').text()
-          record_text = record_text.replace(/,([^ ])/g, ', \$1')
+          record_text = record_text.replace(/([,/:])([^ ])/g, '\$1 \$2')
           if record_text
             repo_li.append($('<p>').text(record_text))
       loader.remove()
