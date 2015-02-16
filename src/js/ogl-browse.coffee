@@ -62,6 +62,7 @@ build_interface = ->
   $('#content').append(repo_list)
   ocr_pattern = /.?201\d+-\d\d-\d\d-\d\d-\d\d.?/
   scan_pattern = /_.*$/
+  repos = _.sortBy(repos, (repo) -> repo.updated_at).reverse()
   for repo in repos
     repo_url_fragment = _.last(repo.html_url.split('/'))
     if repo_url_fragment.match(ocr_pattern)
