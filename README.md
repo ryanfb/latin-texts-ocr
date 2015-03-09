@@ -10,7 +10,7 @@ Processing is being done with:
 Where ocrpdf.sh is a version of [this script](https://gist.github.com/ryanfb/f792ce839c8f26e972cf) modified to retain plaintext and hocr output.
 
 Up to 5cfccaf, the Latin Tesseract training file is [v0.1.0-alpha2](https://github.com/ryanfb/latinocr-lat/releases/tag/v0.1.0-alpha2) from my preliminary Latin OCR training process, Greek is [v2.0 from Nick White's Ancient Greek OCR](http://ancientgreekocr.org/).
-From 0fcc280 on, the Latin Tesseract training file is [v0.2.0](https://github.com/ryanfb/latinocr-lat/releases/tag/v0.1.0-alpha2).
+From 0fcc280 on, the Latin Tesseract training file is [v0.2.0](https://github.com/ryanfb/latinocr-lat/releases/tag/v0.2.0). From 1f3376a on, [v0.2.1](https://github.com/ryanfb/latinocr-lat/releases/tag/v0.2.1) is used.
 
 Languages were picked with:
 
